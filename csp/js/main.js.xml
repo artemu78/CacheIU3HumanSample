@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="js/main.js" application="/csp/user/" default="1"><![CDATA[
+function sendform(obj_param)
+{
+ var human_obj = obj_param || human_fromform();
+ $.ajax({
+        type: "POST",
+        url: "data/savehuman.csp",
+        data: human_obj,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(data){
+	        if(data.ok){
+		        $('.okstr').text('Сохранение прошло успешно');
+		        $('.error').text('');
+	        }
+	        else {
+		        $('.okstr').text('');
+		        $('.error').text(data.error);
+	        }
+	        window.setTimeout(function(){
+		        $('.okstr').text('');
+		        $('.error').text('');
+	        }, 3000);
+	        },
+        failure: function(errMsg) {
+            alert(errMsg);
+        }
+	});
+}
+
+webix.ready(function(){
+    webix.ui(w_form);
+
+    $$('webix_control_97559').attachEvent("onItemClick", 
+    	function(item_id, event){
+	    	var form_obj = this.getParentView().getParentView();
+	    	
+	    	if (form_obj.validate())
+	    	{
+	    		var form_values = form_obj.getValues();
+	    		var form_json_obj = JSON.stringify(form_values);
+	    		sendform(form_json_obj);
+	    	}
+	    	else
+	    	{
+		        $('.error').text('Please, fill required fields');
+		        window.setTimeout(function(){ 
+		        	$('.okstr').text('');
+		        	$('.error').text('');
+		        	form_obj.clearValidation();
+	        	}, 3000);
+	    	}
+	    	});
+});
+
+]]></CSP>
+</Export>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="data/savehuman.csp" application="/csp/user/" default="1"><![CDATA[
+<server>
+
+ set binHash = ##class(%SYSTEM.Encryption).MD5Hash("porko-rosso")
+ set base64Hash = ##class(%SYSTEM.Encryption).Base64Encode(binHash)
+
+ set hash = %request.GetCookie("hash")
+ if (hash '= base64Hash)
+ {
+	 write {"ok": false}.%Set("error", "Security error, try to reload page").%ToJSON()
+	 quit
+ }
+ 
+ 
+	 set requestData = %request.Content.Read()
+	 set dynObj = {}.%FromJSON(requestData)
+	 set humanObj = ##class(Simple.Human).%New(dynObj.name, dynObj.phone, dynObj.gender)
+	 
+	 set workAddr = ##class(Simple.Address).%New()
+	 set workAddr.State = dynObj.wstate
+	 set workAddr.City = dynObj.wcity
+	 set workAddr.Street = dynObj.wstreet
+	 set workAddr.Zip = dynObj.wzip
+	 
+	 set homeAddr = ##class(Simple.Address).%New()
+	 set homeAddr.State = dynObj.hstate
+	 set homeAddr.City = dynObj.hcity
+	 set homeAddr.Street = dynObj.hstreet
+	 set homeAddr.Zip = dynObj.hzip
+	 
+	 set humanObj.Home = homeAddr
+	 set humanObj.Work = workAddr
+	 set ok = humanObj.%Save()
+	 
+	 if $$$ISOK(ok)
+	 {
+		write {"ok": true}.%ToJSON()
+	 }
+	 else
+	 {
+		set Err = ##class(%SYSTEM.Status).GetErrorText(ok)
+		write {"ok": false}.%Set("error", Err).%ToJSON()
+	 }
+	 
+</server>]]></CSP>
+</Export>

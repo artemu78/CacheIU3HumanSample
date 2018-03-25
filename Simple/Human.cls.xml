@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="Simple.Human">
+<Super>%Persistent,%Populate,%Library.DynamicAbstractObject</Super>
+<TimeCreated>64721,70325.625025</TimeCreated>
+
+<Parameter name="VERSIONPROPERTY">
+<Default>Version</Default>
+</Parameter>
+
+<Property name="Version">
+<Type>%Integer</Type>
+</Property>
+
+<Parameter name="SPECIES">
+<Default>Homo Sapiens</Default>
+</Parameter>
+
+<Property name="Name">
+<Description>
+Имя</Description>
+<Type>%String</Type>
+<Required>1</Required>
+</Property>
+
+<Property name="PhoneNum">
+<Description>
+Телефон</Description>
+<Type>%String</Type>
+</Property>
+
+<Property name="Gender">
+<Description>
+Пол</Description>
+<Type>%String</Type>
+</Property>
+
+<Property name="Home">
+<Description><![CDATA[
+Домашний адрес (класс <class>Simple.Address</class>)]]></Description>
+<Type>Simple.Address</Type>
+</Property>
+
+<Property name="Work">
+<Description><![CDATA[
+/Рабочий адрес (класс <class>Simple.Address</class>)]]></Description>
+<Type>Simple.Address</Type>
+</Property>
+
+<Method name="Insert">
+<Description><![CDATA[
+Добавить юзера<br>
+<var>nm</var> - имя<br>
+<var>ph</var> - телефон<br>
+<var>sta</var> - штат<br>]]></Description>
+<ClassMethod>1</ClassMethod>
+<FormalSpec>nm:%String="",ph:%String="",sta:%String=""</FormalSpec>
+<Implementation><![CDATA[
+	//#define StringMacro "Hello, World!"
+
+    set allEmpty = ((nm = "") && (ph = "") && (sta = ""))
+    quit:(allEmpty)  // if all data is empty just quit
+    &sql(insert into simple.human (name, PhoneNum, home_state)
+         values (:nm, :ph, :sta))
+    if (SQLCODE = 0) {
+        &sql(select count(*) into :count from simple.human)
+        write !, count, " records"
+    }
+    else {
+        write !, "SQLCODE: ", SQLCODE, !, %msg
+   }
+]]></Implementation>
+</Method>
+
+<Method name="Print">
+<FormalSpec>state:%String="MA"</FormalSpec>
+<Implementation><![CDATA[
+    write !, ..Name, " lives in ", ..Home.State, ", and is "
+    write "Phone is: ", ..PhoneNum, "."
+]]></Implementation>
+</Method>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DataLocation>^Simple.HumanD</DataLocation>
+<DefaultData>HumanDefaultData</DefaultData>
+<IdLocation>^Simple.HumanD</IdLocation>
+<IndexLocation>^Simple.HumanI</IndexLocation>
+<StreamLocation>^Simple.HumanS</StreamLocation>
+<ExtentSize>11</ExtentSize>
+<Data name="HumanDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>Name</Value>
+</Value>
+<Value name="3">
+<Value>PhoneNum</Value>
+</Value>
+<Value name="4">
+<Value>State</Value>
+</Value>
+<Value name="5">
+<Value>Home</Value>
+</Value>
+<Value name="6">
+<Value>Work</Value>
+</Value>
+<Value name="7">
+<Value>Version</Value>
+</Value>
+<Value name="8">
+<Value>Gender</Value>
+</Value>
+</Data>
+<Property name="%%CLASSNAME">
+<Selectivity>100.0000%</Selectivity>
+<AverageFieldSize>1</AverageFieldSize>
+</Property>
+<Property name="%%ID">
+<Selectivity>1</Selectivity>
+<AverageFieldSize>1.18</AverageFieldSize>
+</Property>
+<Property name="Home">
+<Selectivity>9.0909%,City:100.0000%,State:9.0909%,Street:100.0000%,Zip:100.0000%</Selectivity>
+<OutlierSelectivity>.909091:,State:.909091:</OutlierSelectivity>
+<AverageFieldSize>.91,City:1,State:.18,Street:1,Zip:1</AverageFieldSize>
+</Property>
+<Property name="Name">
+<Selectivity>9.0909%</Selectivity>
+<AverageFieldSize>14.36</AverageFieldSize>
+</Property>
+<Property name="PhoneNum">
+<Selectivity>9.0909%</Selectivity>
+<AverageFieldSize>5.45</AverageFieldSize>
+</Property>
+<Property name="State">
+<Selectivity>9.0909%</Selectivity>
+<AverageFieldSize>1.82</AverageFieldSize>
+</Property>
+<Property name="Version">
+<Selectivity>9.0909%</Selectivity>
+<OutlierSelectivity>.909091:</OutlierSelectivity>
+<AverageFieldSize>.09</AverageFieldSize>
+</Property>
+<Property name="Work">
+<Selectivity>9.0909%,City:100.0000%,State:100.0000%,Street:100.0000%,Zip:100.0000%</Selectivity>
+<OutlierSelectivity>.909091:</OutlierSelectivity>
+<AverageFieldSize>.73,City:1,State:1,Street:1,Zip:1</AverageFieldSize>
+</Property>
+<SQLMap name="IDKEY">
+<BlockCount>-4</BlockCount>
+</SQLMap>
+</Storage>
+
+<Method name="%OnNew">
+<Description><![CDATA[
+This callback method is invoked by the <METHOD>%New</METHOD> method to 
+provide notification that a new instance of an object is being created.
+
+<P>If this method returns an error then the object will not be created.
+<p>It is passed the arguments provided in the %New call.
+When customizing this method, override the arguments with whatever variables and types you expect to receive from %New().
+For example, if you're going to call %New, passing 2 arguments, %OnNew's signature could be:
+<p>Method %OnNew(dob as %Date = "", name as %Name = "") as %Status
+If instead of returning a %Status code this returns an oref and this oref is a subclass of the current
+class then this oref will be the one returned to the caller of %New method.]]></Description>
+<FormalSpec>name:%String="",phonenum:%String="",gender:%String=""</FormalSpec>
+<Private>1</Private>
+<ReturnType>%Status</ReturnType>
+<ServerOnly>1</ServerOnly>
+<Implementation><![CDATA[
+	set ..Name = name
+	set ..PhoneNum = phonenum
+	set ..Gender = gender
+	Quit $$$OK
+]]></Implementation>
+</Method>
+</Class>
+</Export>

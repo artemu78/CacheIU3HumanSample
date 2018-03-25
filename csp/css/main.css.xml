@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="css/main.css" application="/csp/user/" default="1"><![CDATA[
+BODY {margin: 20px; font-family: Arial}
+.message {height: 50px}
+.error{color: red;}
+.okstr{color: darkgreen;}
+
+
+#form_div{ 
+	float:left; 
+	margin:5px;
+	width:440;
+	height:440px;
+	}]]></CSP>
+</Export>

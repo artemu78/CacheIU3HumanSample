@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="js/form.js" application="/csp/user/" default="1"><![CDATA[
+var w_form = {view:"form", elements: [{view:"abslayout", cells: [
+    {
+        view: "text",
+        id: "webix_control_97359",
+        top: 0,
+        left: 0,
+        width: 400,
+        label: "Name",
+        labelAlign: "left",
+        labelPosition: "left",
+        placeholder: "Type your name here",
+        name: "name",
+        labelWidth: "90"
+    },
+    {
+        view: "text",
+        id: "webix_control_97439",
+        top: 40,
+        left: 0,
+        width: 400,
+        label: "Phone (+7)",
+        placeholder: "(###)-### ###",
+        name: "phone",
+        labelWidth: "90"
+    },
+    {
+        view: "radio",
+        id: "webix_control_46753",
+        top: 80,
+        left: 0,
+        options: [
+            {
+                id: "Male",
+                value: "Male"
+            },
+            {
+                id: "Female",
+                value: "Female"
+            }
+        ],
+        width: 400,
+        label: "Gender",
+        labelWidth: "90",
+        name: "gender"
+    },
+    {
+        view: "label",
+        id: "webix_control_99595",
+        top: 120,
+        left: 0,
+        label: "Address",
+        width: 60
+    },
+    {
+        view: "label",
+        id: "webix_control_99626",
+        top: 140,
+        left: 140,
+        label: "Home",
+        width: 60
+    },
+    {
+        view: "label",
+        id: "webix_control_99626650",
+        top: 140,
+        left: 300,
+        label: "Work",
+        width: 60
+    },
+    {
+        view: "label",
+        id: "webix_control_99626729",
+        top: 180,
+        left: 0,
+        label: "State",
+        width: 60
+    },
+    {
+        view: "label",
+        id: "webix_control_99626729740",
+        top: 220,
+        left: 0,
+        label: "City",
+        width: 60
+    },
+    {
+        view: "label",
+        id: "webix_control_99626729740751",
+        top: 260,
+        left: 0,
+        label: "Street",
+        width: 60
+    },
+    {
+        view: "label",
+        id: "webix_control_99626729740751762",
+        top: 300,
+        left: 0,
+        label: "Zip",
+        width: 60
+    },
+    {
+        view: "text",
+        id: "webix_control_99892",
+        top: 180,
+        left: 100,
+        width: 130,
+        name: "hstate"
+    },
+    {
+        view: "text",
+        id: "webix_control_99892926",
+        top: 180,
+        left: 260,
+        width: 130,
+        name: "wstate"
+    },
+    {
+        view: "text",
+        id: "webix_control_99892042",
+        top: 220,
+        left: 100,
+        width: 130,
+        name: "hcity"
+    },
+    {
+        view: "text",
+        id: "webix_control_99892042065",
+        top: 220,
+        left: 260,
+        width: 130,
+        name: "wcity"
+    },
+    {
+        view: "text",
+        id: "webix_control_99892042065088",
+        top: 260,
+        left: 100,
+        width: 130,
+        name: "hstreet"
+    },
+    {
+        view: "text",
+        id: "webix_control_99892042065088111",
+        top: 260,
+        left: 260,
+        width: 130,
+        name: "wstreet"
+    },
+    {
+        view: "text",
+        id: "webix_control_99892042065088111149",
+        top: 300,
+        left: 100,
+        width: 130,
+        name: "hzip"
+    },
+    {
+        view: "text",
+        id: "webix_control_99892042065088111149172",
+        top: 300,
+        left: 260,
+        width: 130,
+        name: "wzip"
+    },
+    {
+        view: "button",
+        id: "webix_control_97559",
+        top: 360,
+        left: 0,
+        label: "💾 Сохранить",
+        width: 400
+    }
+]}]};
+
+w_form.elements[0].cells[0].required = true;
+w_form.elements[0].cells[1].pattern = { mask:"(###)-###-####", allow:/[0-9]/g};
+w_form.container = 'form_div';]]></CSP>
+</Export>
